@@ -9,7 +9,7 @@
  <h2>Hello!</h2>
  
  <h3>Update Dealer</h3>
- <form th:action="@{/dealer/update/{id}(id=${dealer.id})}" th:object="${dealer}" method="POST">
+ <form th:action="@{/dealer/update/{id}(id=${dealer.id})/}" th:object="${dealer}" method="POST">
   Alamat:<br>
   <input type="text" name="alamat" th:value="${dealer.alamat}"/>
   <br>

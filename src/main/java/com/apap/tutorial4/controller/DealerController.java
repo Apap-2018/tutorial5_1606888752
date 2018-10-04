@@ -79,7 +79,7 @@ public class DealerController {
 		return "update-dealer";
 	}
 	
-	@RequestMapping(value = "/dealer/update/{id}", method = RequestMethod.POST)
+	@RequestMapping(value = "/dealer/update/", method = RequestMethod.POST)
 	private String updateDealerSubmit(@PathVariable (value = "id") long id, @ModelAttribute Optional<DealerModel> dealer) {
 		if(dealer.isPresent()) {
 			dealerService.updateDealer(id, dealer);
