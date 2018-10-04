@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+	<title>Dealer Detail</title>
+	</head>
+	<body>
+		<h4 th:text="'Alamat: ' + ${dealer.alamat}"></h4>
+		<h4 th:text="'Telepon: ' + ${dealer.noTelp}"></h4>
+		<a th:href="@{/car/add/{id}(id=${dealer.id})}">Add Car</a>
+		<br>
+		
+		<a th:href="@{/dealer/delete{id}(id=${dealer.id})}">Delete Dealer</a>
+		<br>
+		<a th:href="@{/dealer/update{id}(id=${dealer.id})}">Update Dealer</a>
+		<br>
+		<a th:href="@{/car/add{id}(id=${dealer.id})}">Add Car</a>
+		<br>
+		
+		<a th:href="@{~/}">Kembali</a>
+
+			
+		<h4>List Mobil:</h3>
+ 
+		<table>
+			<div th:if="${not #lists.isEmpty(dealer.listCar)}">
+			
+			<tr>
+		     <th scope="col">Brand</th>
+		     <th scope="col">Type</th>
+		     <th scope="col">Price</th>
+		     <th scope="col">Amount</th> 
+			</tr>
+			<div th:each="car : ${listCar}">
+				<tr>
+					<td th:text="${car.brand}"></td>
+					<td th:text="${car.type}"></td>
+					<td th:text="${car.price}"></td>
+					<td th:text="${car.amount}"></td>
+					<td>
+						<a th:href="@{/car/delete{id}(id=${car.id})}">Delete Car</a>
+					</td>
+					<td>
+						<a th:href="@{/car/update{id}(id=${car.id})}">Update Car</a>
+					</td>
+				</tr>
+			</div>
+			</div>
+			<div th:unless="${not #lists.isEmpty(dealer.listCar)}">Mobil Tidak Tersedia :(</div>
+		</table>
+	</body>
+</html>
