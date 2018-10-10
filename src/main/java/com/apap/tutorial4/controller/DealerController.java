@@ -52,9 +52,11 @@ public class DealerController {
 	@RequestMapping(value="/dealer/view", method=RequestMethod.GET)
 	private String viewDealer(@RequestParam ("dealerId") long dealerId, Model model) {
 		DealerModel archieve = dealerService.getDealerDetailById(dealerId).get();
+		
 		List<CarModel> cars = archieve.getListCar();
 		Collections.sort(cars, comparePrice);
-		model.addAttribute("listCar", cars);
+		
+		archieve.setListCar(cars);
 		model.addAttribute("dealer", archieve);
 		return "view-dealer";
 	}
@@ -72,7 +74,7 @@ public class DealerController {
 		return "delete";
 	}
 	
-	@RequestMapping(value = "/dealer/update/{id}", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/dealer/update/{id}", method = RequestMethod.GET)
 	private String updateDealer(@PathVariable(value = "id") long id, Model model) {
 		DealerModel dealer = dealerService.getDealerDetailById(id).get();
 		model.addAttribute("dealer",dealer);
@@ -86,7 +88,7 @@ public class DealerController {
 			return "update";
 		}
 		return null;
-	}
+	}*/
 	
 	public static Comparator<CarModel> comparePrice = new Comparator<CarModel>() {
 		public int compare(CarModel o1, CarModel o2) {

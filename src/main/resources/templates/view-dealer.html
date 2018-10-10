@@ -2,50 +2,60 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 	<title>Dealer Detail</title>
+	
+	<style>
+	
+		td, th {
+		    text-align: left;
+		    padding: 8px;
+		}
+	</style>
+		
+	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
+	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	</head>
 	<body>
-		<h4 th:text="'Alamat: ' + ${dealer.alamat}"></h4>
-		<h4 th:text="'Telepon: ' + ${dealer.noTelp}"></h4>
-		<a th:href="@{/car/add/{id}(id=${dealer.id})}">Add Car</a>
-		<br>
+		<nav th:replace="fragments/fragment :: navbar"></nav>
 		
-		<a th:href="@{/dealer/delete{id}(id=${dealer.id})}">Delete Dealer</a>
+		<h3 th:text="'Dealer'"></h3>
+		<p th:text="'Alamat ' + ${dealer.alamat}"></p>
+		<p th:text="'No. Telp: ' + ${dealer.noTelp}"></p>
+		<form th:action="@{/dealer/delete{id}(id=${dealer.id})}">
+			<input type="hidden" name="dealerId" th:value="${dealer.id}">
+			<button type="submit">Hapus Dealer</button>
+		</form>
 		<br>
-		<a th:href="@{/dealer/update{id}(id=${dealer.id})}">Update Dealer</a>
+		<form th:action="@{/car/delete}" th:object="${dealer}" method="POST">
+			<table>
+				<thead>
+					<tr>
+						<th>No.</th>
+						<th>Brand</th>
+						<th>Type</th>
+						<th>Price</th>
+						<th>Amount</th>
+						<th>Aksi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="car,iterationStatus : *{listCar}">
+						<td th:text="${iterationStatus.count}"></td>
+						<td th:text="${car.brand}"></td>
+						<td th:text="${car.type}"></td>
+						<td th:text="${car.price} >= 1000000000 ? 'Di atas 1M' : 'Di bawah 1M'"></td>
+						<td th:text="${car.amount}"></td>
+						<td>
+							<input type="checkbox" th:field="*{listCar}" th:value="${car.id}" />
+							<label th:for="${#ids.prev('listCar')}">Hapus</label>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<button type="submit">Hapus yang dipilih</button>
+		</form>
 		<br>
-		<a th:href="@{/car/add{id}(id=${dealer.id})}">Add Car</a>
-		<br>
-		
-		<a th:href="@{~/}">Kembali</a>
-
-			
-		<h4>List Mobil:</h3>
- 
-		<table>
-			<div th:if="${not #lists.isEmpty(dealer.listCar)}">
-			
-			<tr>
-		     <th scope="col">Brand</th>
-		     <th scope="col">Type</th>
-		     <th scope="col">Price</th>
-		     <th scope="col">Amount</th> 
-			</tr>
-			<div th:each="car : ${listCar}">
-				<tr>
-					<td th:text="${car.brand}"></td>
-					<td th:text="${car.type}"></td>
-					<td th:text="${car.price}"></td>
-					<td th:text="${car.amount}"></td>
-					<td>
-						<a th:href="@{/car/delete{id}(id=${car.id})}">Delete Car</a>
-					</td>
-					<td>
-						<a th:href="@{/car/update{id}(id=${car.id})}">Update Car</a>
-					</td>
-				</tr>
-			</div>
-			</div>
-			<div th:unless="${not #lists.isEmpty(dealer.listCar)}">Mobil Tidak Tersedia :(</div>
-		</table>
+		<form th:action="@{/car/add/} + ${dealer.id}">
+			<button value="submit">Tambah Mobil</button>
+		</form>		
 	</body>
 </html>
