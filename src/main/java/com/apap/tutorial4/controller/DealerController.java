@@ -33,7 +33,8 @@ public class DealerController {
 	private CarService carService;
 	
 	@RequestMapping("/")
-	private String home() {
+	private String home(Model model) {
+		model.addAttribute("title", "Home");
 		return "home";
 	}
 	
@@ -58,6 +59,7 @@ public class DealerController {
 		
 		archieve.setListCar(cars);
 		model.addAttribute("dealer", archieve);
+		model.addAttribute("title", "Dealer " + dealerId);
 		return "view-dealer";
 	}
 	
@@ -65,30 +67,33 @@ public class DealerController {
 	private String viewAll (Model model) {
 		List<DealerModel> cars = dealerService.getAllDealer();
 		model.addAttribute("listDealer", cars);
+		model.addAttribute("title", " Dealer Detail");
 		return "view-all-dealer";
 	}
 	
 	@RequestMapping(value = "/dealer/delete{dealerId}", method = RequestMethod.GET)
-	private String updateDealerSubmit(@PathVariable(value = "dealerId") Long dealerId) {
+	private String updateDealerSubmit(@PathVariable(value = "dealerId") Long dealerId, Model model) {
 		dealerService.deleteDealerById(dealerId);
+		model.addAttribute("title", " Delete Dealer");
 		return "delete";
 	}
 	
-/*	@RequestMapping(value = "/dealer/update/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/dealer/update/{id}", method = RequestMethod.GET)
 	private String updateDealer(@PathVariable(value = "id") long id, Model model) {
 		DealerModel dealer = dealerService.getDealerDetailById(id).get();
 		model.addAttribute("dealer",dealer);
+		model.addAttribute("title", " Update Dealer");
 		return "update-dealer";
 	}
 	
 	@RequestMapping(value = "/dealer/update/", method = RequestMethod.POST)
-	private String updateDealerSubmit(@PathVariable (value = "id") long id, @ModelAttribute Optional<DealerModel> dealer) {
+	private String updateDealerSubmit(@PathVariable (value = "id") long id, @ModelAttribute Optional<DealerModel> dealer, Model model) {
 		if(dealer.isPresent()) {
 			dealerService.updateDealer(id, dealer);
 			return "update";
 		}
-		return null;
-	}*/
+		return "error";
+	}
 	
 	public static Comparator<CarModel> comparePrice = new Comparator<CarModel>() {
 		public int compare(CarModel o1, CarModel o2) {

@@ -18,5 +18,5 @@ public interface CarService {
 
 	void deleteCarById(Long carId);
 	
-	void deleteCar(Long car);
+	void deleteCar(CarModel car);
 }

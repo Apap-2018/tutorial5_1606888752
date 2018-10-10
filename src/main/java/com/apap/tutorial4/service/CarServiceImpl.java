@@ -46,8 +46,8 @@ public class CarServiceImpl implements CarService{
 	}
 
 	@Override
-	public void deleteCar(Long car) {
-		carDb.deleteById(car);
+	public void deleteCar(CarModel car) {
+		carDb.delete(car);
 	}
 
 }

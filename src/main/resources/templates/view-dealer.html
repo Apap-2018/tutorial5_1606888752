@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
-	<title>Dealer Detail</title>
-	
-	<style>
-	
+	<style>	
 		td, th {
 		    text-align: left;
 		    padding: 8px;
 		}
 	</style>
-		
+	<object th:include="fragments/fragment :: title" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: css" th:remove="tag"></object>
 	<object th:include="fragments/fragment :: js" th:remove="tag"></object>
 	</head>
